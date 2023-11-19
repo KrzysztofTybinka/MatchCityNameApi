@@ -1,10 +1,12 @@
 ﻿using MatchCityNameApi.DataAccess.Models;
 using MatchCityNameApi.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Globalization;
 
 namespace MatchCityNameApi.DataAccess
 {
-    public class CitiesAccessService
+    public class CitiesAccessService : ICitiesAccessService
     {
         private readonly IMongoCollection<City> _cities;
 
@@ -19,9 +21,18 @@ namespace MatchCityNameApi.DataAccess
             return await results.SingleAsync();
         }
 
-        public async Task<IEnumerable<City>> GetCitiesAsync()
+        public async Task<IEnumerable<City>> GetFilteredCitiesAsync()
         {
-            var results = await _cities.FindAsync(x => x.cou_name_en.StartsWith("ab"));
+            var sort = Builders<City>.Sort.Ascending("dem");
+
+            var results = await _cities.FindAsync(
+                x => x.name.StartsWith("xd"),
+                new FindOptions<City, City>()
+                {
+                    Sort = sort,
+                    Limit = 5
+                });
+
             return await results.ToListAsync();
         }
     }

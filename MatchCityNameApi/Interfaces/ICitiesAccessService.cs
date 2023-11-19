@@ -5,6 +5,6 @@ namespace MatchCityNameApi.Interfaces
     public interface ICitiesAccessService
     {
         public Task<City> GetCityAsync(string id);
-        public Task<IEnumerable<City>> GetCitiesAsync()
+        public Task<IEnumerable<City>> GetFilteredCitiesAsync();
     }
 }

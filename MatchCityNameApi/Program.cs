@@ -1,4 +1,9 @@
-using MongoDB.Driver;
+using MatchCityNameApi.DataAccess;
+using MatchCityNameApi.DataAccess.Models;
+using MatchCityNameApi.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.CodeAnalysis;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<ICitiesAccessService, CitiesAccessService>();
+builder.Services.AddSingleton<IMongoDbFactory>(
+    new MongoDbFactory(builder.Configuration.GetValue<string>("ConnectionStrings:MongoDb")));
 
 var app = builder.Build();
 
@@ -18,29 +26,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet("/cities", ([FromQuery] string text, [FromQuery] int limit, ICitiesAccessService cities) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return cities.GetFilteredCitiesAsync();
 })
-.WithName("GetWeatherForecast")
+.WithName("GetCitites")
 .WithOpenApi();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
