@@ -1,0 +1,62 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.csproj.user
+*.cache
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.sbr
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sdf
+*.opensdf
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+*_jb_old/
+*_jb_tmp/
+*_jb_bak/
+*.sqlite
+*.sqlite3
+*.sqlitedb
+
+# NuGet Packages
+*.nupkg
+packages/
+*.nuspec
+*.psmdcp
+
+# MSTest test Results
+[TestResults|_ReSharper.*]/ 
+[Bb]uild[Ll]og.*
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+*_jb_old/
+*_jb_tmp/
+*_jb_bak/
+*.sqlite
+*.sqlite3
+*.sqlitedb
+
+# Other files
+[Bb]uild[Ll]og.*
+LogFiles/
+node_modules/
+bower_components/
