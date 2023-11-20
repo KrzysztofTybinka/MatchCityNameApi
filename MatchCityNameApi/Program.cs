@@ -1,6 +1,8 @@
 using MatchCityNameApi.DataAccess;
 using MatchCityNameApi.DataAccess.Models;
+using MatchCityNameApi.Domain;
 using MatchCityNameApi.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.CodeAnalysis;
 
@@ -26,9 +28,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/cities", ([FromQuery] string text, [FromQuery] int limit, ICitiesAccessService cities) =>
+app.MapGet("/cities", async (string startsWith, int? limit,
+    ICitiesAccessService cities) =>
 {
-    return cities.GetFilteredCitiesAsync();
+    var cityFilters = new CityFilterService(cities);
+    var filteredCities = cityFilters
+    .GetFilteredCitiesAsync(startsWith, limit);
+
+    return await filteredCities;
 })
 .WithName("GetCitites")
 .WithOpenApi();

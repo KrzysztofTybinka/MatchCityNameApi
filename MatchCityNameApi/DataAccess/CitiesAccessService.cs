@@ -3,6 +3,7 @@ using MatchCityNameApi.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Globalization;
+using System.Linq.Expressions;
 
 namespace MatchCityNameApi.DataAccess
 {
@@ -12,27 +13,24 @@ namespace MatchCityNameApi.DataAccess
 
         public CitiesAccessService(IMongoDbFactory mongoDbFactory)
         {
-            _cities = mongoDbFactory.GetCollection<City>("geodb", "cities");
+            _cities = mongoDbFactory.GetCollection<City>(
+                "geodb", "cities");
         }
 
         public async Task<City> GetCityAsync(string id)
         {
-            var results = await _cities.FindAsync(x => x.Id == id);
+            var results = await _cities.FindAsync(
+                x => x.Id == id);
             return await results.SingleAsync();
         }
 
-        public async Task<IEnumerable<City>> GetFilteredCitiesAsync()
+        public async Task<IEnumerable<City>> GetCitiesAsync(
+            Expression<Func<City, bool>> filter, 
+            FindOptions<City> options)
         {
-            var sort = Builders<City>.Sort.Ascending("dem");
 
-            var results = await _cities.FindAsync(
-                x => x.name.StartsWith("xd"),
-                new FindOptions<City, City>()
-                {
-                    Sort = sort,
-                    Limit = 5
-                });
-
+            var results = await _cities.FindAsync(filter, 
+                options);
             return await results.ToListAsync();
         }
     }
