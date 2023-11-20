@@ -1,6 +1,7 @@
 ﻿using MatchCityNameApi.DataAccess;
 using MatchCityNameApi.DataAccess.Models;
 using MatchCityNameApi.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 
@@ -27,9 +28,9 @@ namespace MatchCityNameApi.Domain
             Expression<Func<City, bool>> filter = 
                 x => x.name.StartsWith(startsWith);
 
-            var findOptions = new FindOptions<City, City>()
+            var findOptions = new FindOptions<City>()
             {
-                Sort = Builders<City>.Sort.Descending("dem"),
+                Sort = Builders<City>.Sort.Descending("population"),
                 Limit = limit
             };
 
