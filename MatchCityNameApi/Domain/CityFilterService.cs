@@ -20,10 +20,12 @@ namespace MatchCityNameApi.Domain
         public async Task<IEnumerable<City>> GetFilteredCitiesAsync(string startsWith, int? limit)
         {
             if (string.IsNullOrEmpty(startsWith) 
-                || startsWith.Length < 2)
+                || startsWith.Length < 1)
             {
                 throw new BadHttpRequestException("Invalid query string");
             }
+
+            startsWith = startsWith[0].ToString().ToUpper() + startsWith.Substring(1).ToLower();
 
             Expression<Func<City, bool>> filter = 
                 x => x.name.StartsWith(startsWith);

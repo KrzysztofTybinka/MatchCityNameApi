@@ -18,9 +18,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<ICitiesAccessService, CitiesAccessService>();
 builder.Services.AddSingleton<IMongoDbFactory>(
-    new MongoDbFactory(builder.Configuration.GetValue<string>("ConnectionStrings:MongoDb")));
+    new MongoDbFactory(builder.Configuration
+    .GetValue<string>("ConnectionStrings:MongoDb")));
 
-builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+builder.Services.AddCors(p => p.AddPolicy(
+    "corspolicy", build =>
 {
     build.WithOrigins("*")
     .AllowAnyMethod()
