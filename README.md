@@ -7,7 +7,7 @@ The JSON response includes full city name and key details like latitude, longitu
 by population order.
 
 # API Endpoint
-The primary endpoint for city matching is:
+The primary endpoint for city matching is:  
 `/api/cities?startsWith={input string}`
 
 ### Parameters
