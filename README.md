@@ -18,7 +18,7 @@ The primary endpoint for city matching is:
 `/api/cities?startsWith=Be&limit=3`
 
 ### Example API response
-```javascript
+```json
 [  
   {  
     "id": "6558925957ff08f32fc484cd",  
@@ -59,7 +59,8 @@ The primary endpoint for city matching is:
     "lon": 13.41053,  
     "lat": 52.52437  
   }  
-]```
+]
+```
 
 ### Fields in API response
 - **id** Unique id
