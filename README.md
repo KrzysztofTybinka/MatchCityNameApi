@@ -75,8 +75,6 @@ The primary endpoint for city matching is:
 - **lon**  Longitude of the location, decimal (-180; 180) 
 - **lat** Latitude of the location, decimal (−90; 90)
 
-# Code
-
 # Contributing
 If you wish to contribute to this project, please feel free to create a pull request with your changes.
 # License
