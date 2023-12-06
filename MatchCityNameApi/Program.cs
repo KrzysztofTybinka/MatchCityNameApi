@@ -44,7 +44,7 @@ app.UseHttpsRedirection();
 
 
 
-app.MapGet("/cities", async (string startsWith, int? limit,
+app.MapGet("/api/cities", async (string startsWith, int? limit,
     ICitiesAccessService cities) =>
 {
     var cityFilters = new CityFilterService(cities);
